@@ -16,14 +16,14 @@ class World:
         self.zz = np.zeros(shape=(width, height))
 
 
-width = 800
-height = 600
+width = 1600
+height = 1200
 
 world = World(width, height)
 
-scale = 100
+scale = 200
 amplitude = 100
-iterations = 4
+iterations = 6
 
 fig, ax = plt.subplots(figsize=(10, 7))
 
@@ -33,10 +33,15 @@ world.zz += perlin_noise(world.x, world.y,
                          iterations=iterations
                          )
 
-map = plt.pcolormesh(world.xx, world.yy, world.zz, cmap="coolwarm", vmin=-100, vmax=100)
-plt.contour(world.xx, world.yy, world.zz, [0])
+map = ax.pcolormesh(world.xx, world.yy, world.zz, cmap="coolwarm", vmin=-100, vmax=100)
+ax.contour(world.xx, world.yy, world.zz, [0])
+ax.set_aspect("equal")
+
 divider = make_axes_locatable(ax)
 cax = divider.append_axes('right', size='5%', pad=0.05)
 fig.colorbar(map, cax=cax, orientation='vertical')
+
 # ax.set_axis_off()
+
+plt.savefig("perlin_noise.png", dpi=600)
 plt.show()
